@@ -56,23 +56,17 @@
     <div class="message" id="msg">كبرت القويهههه ميروتشششي 🎉</div>
   </div>
   <canvas id="confetti"></canvas>
-
-  <!-- مشغل الصوت -->
-  <audio id="song" src="YOUR-MP3-LINK-HERE.mp3"></audio>
-
+  <audio id="song" src="https://raw.githubusercontent.com/hamad26650/gift/main/sanahelwa.mp3"></audio>
   <script>
     function showGift() {
       document.getElementById("msg").style.display = "block";
       document.getElementById("song").play();
       startConfetti();
     }
-
-    // confetti effect
     const canvas = document.getElementById("confetti");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
     const confetti = [];
     function Confetto() {
       this.x = Math.random() * canvas.width;
@@ -81,17 +75,15 @@
       this.speed = Math.random() * 3 + 2;
       this.color = `hsl(${Math.random() * 360},100%,50%)`;
     }
-
     function startConfetti() {
       for (let i = 0; i < 200; i++) {
         confetti.push(new Confetto());
       }
       animate();
     }
-
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      confetti.forEach((c, i) => {
+      confetti.forEach((c) => {
         c.y += c.speed;
         if (c.y > canvas.height) c.y = -10;
         ctx.fillStyle = c.color;
@@ -99,7 +91,6 @@
       });
       requestAnimationFrame(animate);
     }
-
     window.onresize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
