@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>هدية خاصة</title>
+  <style>
+    body {
+      background: #1a1a1a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: "Tajawal", sans-serif;
+      color: white;
+      text-align: center;
+    }
+    .box {
+      background: #ff4d4d;
+      width: 150px;
+      height: 150px;
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 40px;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255,0,0,0.6);
+      transition: 0.3s;
+    }
+    .box:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px rgba(255,0,0,0.9);
+    }
+    .message {
+      display: none;
+      font-size: 28px;
+      margin-top: 20px;
+      animation: pop 0.8s ease forwards;
+    }
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <div class="box" onclick="showGift()">🎁</div>
+    <div class="message" id="msg">كبرت القويهههه ميروتشششي 🎉</div>
+  </div>
+  <canvas id="confetti"></canvas>
+
+  <!-- مشغل الصوت -->
+  <audio id="song" src="YOUR-MP3-LINK-HERE.mp3"></audio>
+
+  <script>
+    function showGift() {
+      document.getElementById("msg").style.display = "block";
+      document.getElementById("song").play();
+      startConfetti();
+    }
+
+    // confetti effect
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const confetti = [];
+    function Confetto() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height - canvas.height;
+      this.size = Math.random() * 7 + 3;
+      this.speed = Math.random() * 3 + 2;
+      this.color = `hsl(${Math.random() * 360},100%,50%)`;
+    }
+
+    function startConfetti() {
+      for (let i = 0; i < 200; i++) {
+        confetti.push(new Confetto());
+      }
+      animate();
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confetti.forEach((c, i) => {
+        c.y += c.speed;
+        if (c.y > canvas.height) c.y = -10;
+        ctx.fillStyle = c.color;
+        ctx.fillRect(c.x, c.y, c.size, c.size);
+      });
+      requestAnimationFrame(animate);
+    }
+
+    window.onresize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+  </script>
+</body>
+</html>
